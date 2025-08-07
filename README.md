@@ -56,3 +56,24 @@ helm show values bitnami/wordpress
 ```
 
 * ukazt konfiguraci s nginxem a certbotem
+
+helm repo add bitnami https://charts.bitnami.com/bitnami                                            
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx                                    
+helm repo add openebs https://openebs.github.io/charts                                              
+helm repo add camunda https://helm.camunda.io                                                       
+helm repo add nfs-provisioner https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner/
+helm repo add mailu https://mailu.github.io/helm-charts/                                          
+helm repo add wiremind https://wiremind.github.io/wiremind-helm-charts                               
+helm repo add gitlab https://charts.gitlab.io/                                                     
+helm repo add jetstack https://charts.jetstack.io                                                    
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts                            
+helm repo add sentry https://sentry-kubernetes.github.io/charts                                    
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/                             
+helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts                                    
+helm repo add triliovault-operator http://charts.k8strilio.net/trilio-stable/k8s-triliovault-operator            
+helm repo add minio https://charts.min.io/                                                        
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest                             
+helm repo add traefik https://traefik.github.io/charts                                              
+helm repo add longhorn https://charts.longhorn.io                                                    
+helm repo add metallb https://metallb.github.io/metallb                                             
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
