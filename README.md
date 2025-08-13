@@ -89,3 +89,14 @@ spec:
 ```
 kubectl apply -f metallb.yaml
 ```
+
+### Ziskani values z helm chartu
+```
+helm show values harbor/harbor > values.yaml
+```
+
+values file pak jde vyuzit pri instalaci nebo upgrade
+
+```
+helm upgrade harbor harbor/harbor -n harbor --install --create-namespace -v values.yaml
+```
