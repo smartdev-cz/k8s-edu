@@ -5,58 +5,11 @@
 - lens / freelens
 - k3d / minikube / k0s
 
-# Zakladni setup lokalniho prostredi
+# Zakladni setup
 
-### k3d
-```
-k3d cluster create -s 3 -i rancher/k3s:v1.32.7-k3s1
-
-k3d cluster create -s 3 -i harbor.smartdev.cz/public/ks3:v1.33.3-k3s1
-
-helm uninstall traefik traefik-crd -n kube-system
-```
-- kubectl config / KUBECONFIG
-- otestovat kubectl a helm
-### ingress-nginx
-```
-helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace
-```
-### cert-manager
-```
-helm install cert-manager jetstack/cert-manager --set crds.enabled=true -n cert-manager --create-namespace
-```
- konfigurace pro letsencrypt
-```
-apiVersion: cert-manager.io/v1  
-kind: ClusterIssuer  
-metadata:  
-  name: letsencrypt-prod  
-spec:  
-  acme:  
-    server: https://acme-v02.api.letsencrypt.org/directory  
-    email: admin@trigama.eu  
-    privateKeySecretRef:  
-      name: letsencrypt-prod-key
-```
+### Helm repozitare 
 
 ```
-kubectl apply -f cert-manager-letsencrypt.yaml
-```
-### longhorn
-```
-helm install longhorn longhorn/longhorn -n longhorn-system --create-namespace
-```
-
-### Wordpress
-```
-helm install wp-test2 bitnami/wordpress -n wp-test2 --create-namespace
-```
-```
-helm show values bitnami/wordpress
-```
-
-* ukazt konfiguraci s nginxem a certbotem
-
 helm repo add bitnami https://charts.bitnami.com/bitnami                                            
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx                                    
 helm repo add openebs https://openebs.github.io/charts                                              
@@ -77,3 +30,62 @@ helm repo add traefik https://traefik.github.io/charts
 helm repo add longhorn https://charts.longhorn.io                                                    
 helm repo add metallb https://metallb.github.io/metallb                                             
 helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+```
+
+### MetalLB
+```
+helm install metallb metallb/metallb -n metallb-system --create-namespace
+```
+
+### ingress-nginx
+```
+helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx --create-namespace
+```
+### cert-manager
+```
+helm install cert-manager jetstack/cert-manager --set crds.enabled=true -n cert-manager --create-namespace
+```
+
+### longhorn
+```
+helm install longhorn longhorn/longhorn -n longhorn-system --create-namespace
+```
+
+### Wordpress (testovaci appka)
+```
+helm install wp-test2 bitnami/wordpress -n wp-test2 --create-namespace
+```
+
+### Konfigurace certbota pro PROD Letsencrypt
+```
+apiVersion: cert-manager.io/v1  
+kind: ClusterIssuer  
+metadata:  
+  name: letsencrypt-prod  
+spec:  
+  acme:  
+    server: https://acme-v02.api.letsencrypt.org/directory  
+    email: admin@trigama.eu  
+    privateKeySecretRef:  
+      name: letsencrypt-prod-key
+```
+
+```
+kubectl apply -f cert-manager-letsencrypt.yaml
+```
+
+### Konfigurace MetalLB
+```
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - xxx.xxx.xxx.xxx/xx
+```
+
+```
+kubectl apply -f metallb.yaml
+```
